@@ -9,6 +9,8 @@ const DB_SHEET_ID = scriptProperties.getProperty('DB_SHEET_ID');
 // 主程序
 function doPost(e) {
     e.method = 'post';
+    log(e);
+
     const lineBot = new LineBot({
         channelId: LINE_CHANNEL_ID,
         channelSecret: LINE_CHANNEL_SECRET,

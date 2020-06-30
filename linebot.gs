@@ -22,6 +22,8 @@ class LineBot {
         const that = this;
         const req = JSON.parse(rawBody);
         if (!req || !req.events || !Array.isArray(req.events)) {
+            logError('Requests Parameters Invalid.');
+            logError(rawBody);
             return;
         }
         req.events.forEach(function (event) {
@@ -49,8 +51,8 @@ class LineBot {
             if (typeof this.listeners[type] === 'function') {
                 this.listeners[type](event);
             } else {
-                log(`unset type "${type}"`);
-                log(event);
+                logError(`unset type "${type}"`);
+                logError(event);
             }
         });
     }
