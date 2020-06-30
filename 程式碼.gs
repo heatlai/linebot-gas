@@ -28,6 +28,10 @@ function doPost(e) {
     try {
         lineBot.handler(e.postData.contents);
     } catch (exception) {
-        logError(exception);
+        if (exception instanceof SyntaxError) {
+            logError(exception.name);
+        } else {
+            logError(exception.message);
+        }
     }
 }

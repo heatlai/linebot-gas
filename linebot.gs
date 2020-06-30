@@ -47,7 +47,7 @@ class LineBot {
             }
 
             let type = event.type;
-            if (typeof that.listeners[type] === 'function') {
+            if (typeof this.listeners[type] === 'function') {
                 that.listeners[type](event);
             } else {
                 logError(`unset type "${type}"`, event);
