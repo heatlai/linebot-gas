@@ -31,7 +31,7 @@ function doPost(e) {
         if (exception instanceof SyntaxError) {
             logError(exception.name);
         } else {
-            logError(exception.message);
+            logError(exception.stack || exception.message || e);
         }
     }
 }
