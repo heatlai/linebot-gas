@@ -7,7 +7,7 @@ function logInfo(msg) {
     if (sheet != null) {
         var newRow = sheet.getLastRow() + 1;
         sheet.getRange(newRow, 1, 1, 2).setValues(
-            ['info', JSON.stringify(msg)]
+            [['info', JSON.stringify(msg)]]
         );
     }
 }
@@ -17,7 +17,7 @@ function logError(msg) {
     if (sheet != null) {
         var newRow = sheet.getLastRow() + 1;
         sheet.getRange(newRow, 1, 1, 2).setValues(
-            ['error', JSON.stringify(msg)]
+            [['error', JSON.stringify(msg)]]
         );
     }
 }
