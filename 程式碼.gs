@@ -23,7 +23,7 @@ function doPost(e) {
 
     try {
         lineBot.handler(e.postData.contents);
-    } catch (e) {
-        logError(e);
+    } catch (exception) {
+        logError(exception);
     }
 }
