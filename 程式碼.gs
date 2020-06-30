@@ -19,11 +19,17 @@ function doPost(e) {
         adminUsers: ADMIN_USERS
     });
 
+    const botCmd = new BotCommand(lineBot);
+
     lineBot.on('message', function(event){
-        let displayName = event.source.profile().displayName;
-        let msg = `${displayName} 剛才說的是:\n${event.message.text}`;
-        event.reply(msg);
-        log(`reply to ${displayName}`, msg);
+        if( botCmd.isCommand(event) ) {
+            botCmd.runCommand(event);
+        }
+
+        // let displayName = event.source.profile().displayName;
+        // let msg = `${displayName} 剛才說的是:\n${event.message.text}`;
+        // event.reply(msg);
+        // log(`reply to ${displayName}`, msg);
     });
 
     try {
