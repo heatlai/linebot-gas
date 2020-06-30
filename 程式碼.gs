@@ -19,8 +19,10 @@ function doPost(e) {
     });
 
     lineBot.on('message', function(event){
-        log(event);
-        event.reply(`剛才說的是:\n${event.message.text}`);
+        let displayName = event.source.profile().displayName;
+        let msg = `${displayName} 剛才說的是:\n${event.message.text}`;
+        event.reply(msg);
+        log(`reply to ${displayName}`, msg);
     });
 
     try {

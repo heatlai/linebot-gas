@@ -1,7 +1,5 @@
 function log(msg) {
-    let args = [...arguments].map((v) => JSON.stringify(v));
-    args.unshift('info');
-    writeLog(args);
+    logInfo.apply(null, [...arguments]);
 }
 
 function logInfo(msg) {
