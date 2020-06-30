@@ -1,16 +1,19 @@
 function log(msg) {
-    let args = [...arguments].map(() => JSON.stringify(msg));
-    writeLog(args.unshift('info'));
+    let args = [...arguments].map((v) => JSON.stringify(v));
+    args.unshift('info');
+    writeLog(args);
 }
 
 function logInfo(msg) {
-    let args = [...arguments].map(() => JSON.stringify(msg));
-    writeLog(args.unshift('info'));
+    let args = [...arguments].map((v) => JSON.stringify(v));
+    args.unshift('info');
+    writeLog(args);
 }
 
 function logError(msg) {
-    let args = [...arguments].map(() => JSON.stringify(msg));
-    writeLog(args.unshift('error'));
+    let args = [...arguments].map((v) => JSON.stringify(v));
+    args.unshift('error');
+    writeLog(args);
 }
 
 function writeLog(values) {
