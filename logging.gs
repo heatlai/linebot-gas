@@ -3,6 +3,9 @@ function log(msg) {
 }
 
 function logInfo(msg) {
+    if(!DEBUG) {
+        return;
+    }
     let args = [...arguments].map((v) => JSON.stringify(v));
     args.unshift('info');
     writeLog(args);
