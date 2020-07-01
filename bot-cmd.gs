@@ -12,10 +12,14 @@ const BotCommand = function (bot) {
     this.runCommand = function (event) {
         for (let commandsKey in commands) {
             if( event.message.text.contains(commandsKey) ) {
-                commands[commandsKey].do(event);
+                log('runCommand', commandsKey);
+                return commands[commandsKey].do(event);
             }
         }
+        log('Unknown Command', event.message.text);
     }
+
+    this.getCommands = () => commands;
 
     let commands = {
         "指令表": {
