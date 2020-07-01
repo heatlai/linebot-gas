@@ -50,7 +50,7 @@ class LineBot {
             if (typeof that.listeners[type] === 'function') {
                 that.listeners[type](event);
             } else {
-                logError(`unset type "${type}"`, event);
+                log(`unset listener type "${type}"`, event);
             }
         });
     }

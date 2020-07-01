@@ -32,6 +32,10 @@ function doPost(e) {
         // log(`reply to ${displayName}`, msg);
     });
 
+    lineBot.on('join', function (event) {
+        event.reply("來來來吼伊係大反攻他媽的！");
+    });
+
     try {
         lineBot.handler(e.postData.contents);
     } catch (exception) {

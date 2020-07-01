@@ -12,14 +12,14 @@ const BotCommand = function (bot) {
     this.existsCommand = (event) => {
 
         for (let commandsKey in commands) {
-            if( event.message.text.includes(commandsKey) ) {
+            if (event.message.text.includes(commandsKey)) {
                 return commandsKey
             }
-            if( Array.isArray(commands[commandsKey]['alias']) ) {
-                let matches = commands[commandsKey]['alias'].find(function(item, index, array){
+            if (Array.isArray(commands[commandsKey]['alias'])) {
+                let matches = commands[commandsKey]['alias'].find(function (item, index, array) {
                     return event.message.text.includes(item);
                 });
-                if( matches ) {
+                if (matches) {
                     return commandsKey;
                 }
             }
@@ -27,7 +27,7 @@ const BotCommand = function (bot) {
     }
     this.runCommand = function (event) {
         let cmd = this.existsCommand(event);
-        if( cmd ) {
+        if (cmd) {
             log('runCommand', cmd);
             return commands[cmd].do(event);
         }
@@ -42,9 +42,9 @@ const BotCommand = function (bot) {
             description: "顯示可用指令",
             do(event) {
                 let list = "可用指令：\n";
-                for (let cmd in commands) {
+                Object.keys(commands).forEach(function(cmd) {
                     list += `${cmd} : ${commands[cmd].description}\n`;
-                }
+                })
                 event.reply(list);
             }
         },
@@ -53,13 +53,29 @@ const BotCommand = function (bot) {
             description: "隨機挑選飲料店",
             alias: ['喝什麼'],
             do(event) {
-                let sheet = GoogleSheet.getSheetByName('飲料店');
-                let name = sheet.getRange("A2:A" + sheet.getLastRow()).getValues().map(function(row) {
-                    return row[0];
-                }).random();
-                event.reply(name);
+                let data = arrayRandom(DB.newQuery().table('飲料店').all());
+                let msg = '';
+                Object.keys(data).forEach(function(col) {
+                    msg += `${col} : ${data[col]}`
+                })
+                event.reply(msg);
             }
         },
+        "離開": {
+            public: true,
+            description: "叫我滾",
+            alias: ['leave'],
+            do(event) {
+                if( ['room', 'group'].includes(event.source.type) ) {
+                    event.reply(`我是賽亞人的驕傲！`);
+                    if (event.source.type === 'room') {
+                        bot.leaveRoom(event.source.roomId);
+                    } else if (event.source.type === 'group') {
+                        bot.leaveGroup(event.source.groupId);
+                    }
+                }
+            }
+        }
     }
 
     return this;
