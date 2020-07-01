@@ -2,7 +2,7 @@ const BotCommand = function (bot) {
     const that = this;
 
     this.isCommand = function (event) {
-        return this.isTextMessage() && event.message.text.startsWith('神奇海螺');
+        return this.isTextMessage(event) && event.message.text.startsWith('神奇海螺');
     }
 
     this.isTextMessage = function (event) {
