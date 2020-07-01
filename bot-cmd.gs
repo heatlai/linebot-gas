@@ -10,9 +10,18 @@ const BotCommand = function (bot) {
         return event.type === 'message' && event.message.type === 'text';
     }
     this.existsCommand = (event) => {
+
         for (let commandsKey in commands) {
             if( event.message.text.includes(commandsKey) ) {
                 return commandsKey
+            }
+            if( Array.isArray(commands[commandsKey]['alias']) ) {
+                let matches = commands[commandsKey]['alias'].find(function(item, index, array){
+                    return event.message.text.includes(item);
+                });
+                if( matches ) {
+                    return commandsKey;
+                }
             }
         }
     }
@@ -42,6 +51,7 @@ const BotCommand = function (bot) {
         "喝什麼": {
             public: true,
             description: "隨機挑選飲料店",
+            alias: ['飲料店'],
             do(event) {
                 let sheet = GoogleSheet.getSheetByName('喝什麼');
                 let name = sheet.getRange("A2:A" + sheet.getLastRow()).getValues().map(function(row) {
