@@ -13,7 +13,7 @@ class DB {
      * @param {Array[]} data
      * @return {Object[]}
      */
-    #transform(data) {
+    transform(data) {
         let fieldNames = data.shift();
         return data.map(row => arrayCombine(fieldNames, row));
     }
@@ -28,6 +28,6 @@ class DB {
         let lastRow = sheet.getLastRow();
         let lastColumn = sheet.getLastColumn();
         let data = sheet.getRange(1, 1, lastRow, lastColumn).getValues();
-        return this.#transform(data);
+        return this.transform(data);
     }
 }
