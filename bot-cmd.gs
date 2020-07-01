@@ -2,19 +2,25 @@ const BotCommand = function (bot) {
     const that = this;
 
     this.isCommand = function (event) {
-        return this.isTextMessage(event) && event.message.text.startsWith('神奇海螺');
+        return this.isTextMessage(event)
+            && (event.source.type === 'user' || event.message.text.startsWith('神奇海螺'));
     }
 
     this.isTextMessage = function (event) {
         return event.type === 'message' && event.message.type === 'text';
     }
-
-    this.runCommand = function (event) {
+    this.existsCommand = (event) => {
         for (let commandsKey in commands) {
-            if( event.message.text.contains(commandsKey) ) {
-                log('runCommand', commandsKey);
-                return commands[commandsKey].do(event);
+            if( event.message.text.includes(commandsKey) ) {
+                return commandsKey
             }
+        }
+    }
+    this.runCommand = function (event) {
+        let cmd = this.existsCommand(event);
+        if( cmd ) {
+            log('runCommand', cmd);
+            return commands[cmd].do(event);
         }
         log('Unknown Command', event.message.text);
     }
