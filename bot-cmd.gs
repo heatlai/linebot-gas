@@ -82,7 +82,7 @@ const BotCommand = function (bot) {
             alias: ['遊戲boy'],
             do(event) {
                 let num = randomInt(3, 18);
-                let msg = `遊戲boy擲出了點數 : ${num}`;
+                let msg = `哼！遊戲boy 擲出了點數 : ${num}`;
                 event.reply(msg);
             }
         }
