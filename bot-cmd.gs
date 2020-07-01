@@ -48,12 +48,12 @@ const BotCommand = function (bot) {
                 event.reply(list);
             }
         },
-        "喝什麼": {
+        "飲料店": {
             public: true,
             description: "隨機挑選飲料店",
-            alias: ['飲料店'],
+            alias: ['喝什麼'],
             do(event) {
-                let sheet = GoogleSheet.getSheetByName('喝什麼');
+                let sheet = GoogleSheet.getSheetByName('飲料店');
                 let name = sheet.getRange("A2:A" + sheet.getLastRow()).getValues().map(function(row) {
                     return row[0];
                 }).random();
