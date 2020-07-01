@@ -51,7 +51,7 @@ const BotCommand = function (bot) {
         "飲料店": {
             public: true,
             description: "隨機挑選飲料店",
-            alias: ['喝什麼'],
+            alias: ['喝什麼', '口渴'],
             do(event) {
                 let data = arrayRandom(DB.newQuery().table('飲料店').all());
                 let msg = '';
