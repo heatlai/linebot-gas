@@ -54,9 +54,9 @@ const BotCommand = function (bot) {
             alias: ['喝什麼', '口渴'],
             do(event) {
                 let data = arrayRandom(DB.newQuery().table('飲料店').all());
-                let msg = '';
+                let msg = `隨機選中了一家飲料店\n`;
                 Object.keys(data).forEach(function(col) {
-                    msg += `${col} : ${data[col]}`
+                    msg += `${col} : ${data[col]}\n`
                 })
                 event.reply(msg);
             }
