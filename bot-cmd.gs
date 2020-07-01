@@ -81,11 +81,9 @@ const BotCommand = function (bot) {
             description: "擲出三顆骰子",
             alias: ['遊戲boy'],
             do(event) {
-                if( ['room', 'group'].includes(event.source.type) ) {
-                    let num = randomInt(3, 18);
-                    let msg = `遊戲boy擲出了點數 : ${num}`;
-                    event.reply(msg);
-                }
+                let num = randomInt(3, 18);
+                let msg = `遊戲boy擲出了點數 : ${num}`;
+                event.reply(msg);
             }
         }
     }
