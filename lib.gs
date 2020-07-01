@@ -9,3 +9,7 @@ function arrayCombine(keys, values) {
 function arrayRandom(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
+
+function randomInt(min, max) {
+    return min + (Math.random() * (max - min));
+}

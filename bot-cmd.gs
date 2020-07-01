@@ -10,14 +10,14 @@ const BotCommand = function (bot) {
         return event.type === 'message' && event.message.type === 'text';
     }
     this.existsCommand = (event) => {
-
+        let received = event.message.text.toLowerCase()
         for (let commandsKey in commands) {
-            if (event.message.text.includes(commandsKey)) {
+            if (received.includes(commandsKey)) {
                 return commandsKey
             }
             if (Array.isArray(commands[commandsKey]['alias'])) {
                 let matches = commands[commandsKey]['alias'].find(function (item, index, array) {
-                    return event.message.text.includes(item);
+                    return received.includes(item);
                 });
                 if (matches) {
                     return commandsKey;
@@ -73,6 +73,18 @@ const BotCommand = function (bot) {
                     } else if (event.source.type === 'group') {
                         bot.leaveGroup(event.source.groupId);
                     }
+                }
+            }
+        },
+        "擲骰子": {
+            public: true,
+            description: "擲出三顆骰子",
+            alias: ['遊戲boy'],
+            do(event) {
+                if( ['room', 'group'].includes(event.source.type) ) {
+                    let num = randomInt(3, 18);
+                    let msg = `遊戲boy擲出了點數 : ${num}`;
+                    event.reply(msg);
                 }
             }
         }
