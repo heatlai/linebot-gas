@@ -11,5 +11,5 @@ function arrayRandom(array) {
 }
 
 function randomInt(min, max) {
-    return min + (Math.random() * (max - min));
+    return Math.floor(min + (Math.random() * (max - min)));
 }
