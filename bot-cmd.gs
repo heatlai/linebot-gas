@@ -92,7 +92,7 @@ const BotCommand = function (bot) {
         "抽正妹": {
             public: true,
             description: "給你正妹照片",
-            alias: ['妹子妹子'],
+            alias: ['妹子妹子', '奶子奶子'],
             do(event) {
                 let image = GoogleDrive.open('images/girl').randomFile();
                 let imageInfo = GoogleDrive.getImageInfo(image);
