@@ -9,7 +9,7 @@ const BotCommand = function (bot) {
     this.isTextMessage = function (event) {
         return event.type === 'message' && event.message.type === 'text';
     }
-    this.existsCommand = (event) => {
+    this.parseCommandKey = (event) => {
         let message_array = event.message.text.toLowerCase().split(' ');
         let message = message_array[0];
         for (let commandsKey in commands) {
@@ -33,19 +33,15 @@ const BotCommand = function (bot) {
                 }
             }
         }
-    }
-    this.runCommand = function (event) {
-        let cmd = this.existsCommand(event);
-        if (cmd) {
-            if ( commands[cmd].public || event.isAdmin()) {
-                log('runCommand', cmd);
-                commands[cmd].do(event);
-            } else {
-                log('cannot runCommand', cmd);
-            }
-            return;
-        }
         log('Unknown Command', event.message.text);
+    }
+    this.runCommand = function (commandKey, event) {
+        if ( commands[commandKey].public || event.isAdmin()) {
+            log('runCommand', commandKey);
+            commands[commandKey].do(event);
+        } else {
+            log('no permission to runCommand', commandKey);
+        }
     }
 
     this.getCommands = () => commands;
