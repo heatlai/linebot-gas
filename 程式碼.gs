@@ -5,6 +5,7 @@ const LINE_CHANNEL_SECRET = scriptProperties.getProperty('LINE_CHANNEL_SECRET');
 const LINE_CHANNEL_ACCESS_TOKEN = scriptProperties.getProperty('LINE_CHANNEL_ACCESS_TOKEN');
 const ADMIN_USERS = scriptProperties.getProperty('ADMIN_USERS').split(',');
 const DB_SHEET_ID = scriptProperties.getProperty('DB_SHEET_ID');
+const GOOGLE_DRIVE_PUBLIC_FOLDER_ID = scriptProperties.getProperty('GOOGLE_DRIVE_PUBLIC_FOLDER_ID');
 const DEBUG = scriptProperties.getProperty('DEBUG');
 
 // 主程序
