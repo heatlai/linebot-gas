@@ -57,6 +57,7 @@ class GoogleDrive {
     }
 
     static getPublicImageUrl(fileId, width, height) {
+        // lh3 ~ lh6
         let url = `https://lh3.googleusercontent.com/d/${fileId}`;
         if( width || height) url += '=';
         if( width ) url += `w${width}`;

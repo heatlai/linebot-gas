@@ -77,7 +77,7 @@ const BotCommand = function (bot) {
         },
         "抽飲料店": {
             public: true,
-            description: "隨機挑選飲料店",
+            description: "幫你選飲料店",
             includes: ['喝什麼', '口渴'],
             do(event) {
                 let data = arrayRandom(DB.newQuery().table('飲料店').all());
@@ -86,6 +86,21 @@ const BotCommand = function (bot) {
                     msg += `${col} : ${data[col]}\n`
                 })
                 msg += '我們就喝這家吧！';
+                event.reply(msg);
+            }
+        },
+        "抽正妹": {
+            public: true,
+            description: "給你正妹照片",
+            alias: ['妹子妹子'],
+            do(event) {
+                let image = GoogleDrive.open('images/girl').randomFile();
+                let imageInfo = GoogleDrive.getImageInfo(image);
+                let msg = {
+                    type: 'image',
+                    originalContentUrl: imageInfo.origin,
+                    previewImageUrl: imageInfo.thumbnail
+                }
                 event.reply(msg);
             }
         },
@@ -112,7 +127,7 @@ const BotCommand = function (bot) {
             alias: ['遊戲boy'],
             do(event) {
                 let num = randomInt(3, 18);
-                let msg = `哼！遊戲boy 擲出了點數 : ${num}`;
+                let msg = `哼！遊戲boy 擲出了 ${num} 點`;
                 event.reply(msg);
             }
         },
