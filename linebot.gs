@@ -32,7 +32,7 @@ class LineBot {
             };
             event.isAdmin = function() {
                 if( event.source ) {
-                    return that.options.adminUser.includes(sevent.source.userId);
+                    return that.options.adminUsers.includes(sevent.source.userId);
                 }
                 return false;
             }
