@@ -31,6 +31,8 @@ const BotCommand = function (bot) {
             if ( commands[cmd].public || event.isAdmin()) {
                 log('runCommand', cmd);
                 commands[cmd].do(event);
+            } else {
+                log('cannot runCommand', cmd);
             }
             return;
         }
