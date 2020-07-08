@@ -3,21 +3,30 @@ const BotCommand = function (bot) {
 
     this.isCommand = function (event) {
         return this.isTextMessage(event)
-            && (event.source.type === 'user' || event.message.text.startsWith('神奇海螺'));
+            // && (event.source.type === 'user' || event.message.text.startsWith('神奇海螺'));
     }
 
     this.isTextMessage = function (event) {
         return event.type === 'message' && event.message.type === 'text';
     }
     this.existsCommand = (event) => {
-        let received = event.message.text.toLowerCase()
+        let message_array = event.message.text.toLowerCase().split(' ');
+        let message = message_array[0];
         for (let commandsKey in commands) {
-            if (received.includes(commandsKey)) {
+            if (message === commandsKey) {
                 return commandsKey
             }
             if (Array.isArray(commands[commandsKey]['alias'])) {
                 let matches = commands[commandsKey]['alias'].find(function (item, index, array) {
-                    return received.includes(item);
+                    return message === item;
+                });
+                if (matches) {
+                    return commandsKey;
+                }
+            }
+            if (Array.isArray(commands[commandsKey]['includes'])) {
+                let matches = commands[commandsKey]['includes'].find(function (item, index, array) {
+                    return message.includes(item);
                 });
                 if (matches) {
                     return commandsKey;
@@ -46,7 +55,7 @@ const BotCommand = function (bot) {
             public: true,
             description: "顯示可用指令",
             do(event) {
-                let list = "可用指令：\n";
+                let list = "";
                 Object.keys(commands).forEach(function(cmd) {
                     if( commands[cmd].public ) {
                         list += `${cmd} : ${commands[cmd].description}\n`;
@@ -59,17 +68,17 @@ const BotCommand = function (bot) {
             public: false,
             description: "顯示可用指令",
             do(event) {
-                let list = "可用指令：\n";
+                let list = "";
                 Object.keys(commands).forEach(function(cmd) {
                     list += `${cmd} : ${commands[cmd].description}\n`;
                 })
                 event.reply(list);
             }
         },
-        "飲料店": {
+        "抽飲料店": {
             public: true,
             description: "隨機挑選飲料店",
-            alias: ['喝什麼', '口渴'],
+            includes: ['喝什麼', '口渴'],
             do(event) {
                 let data = arrayRandom(DB.newQuery().table('飲料店').all());
                 let msg = '';
@@ -80,10 +89,10 @@ const BotCommand = function (bot) {
                 event.reply(msg);
             }
         },
-        "離開": {
+        "!滾": {
             public: true,
             description: "叫我滾",
-            alias: ['leave'],
+            alias: ['！滾'],
             do(event) {
                 if( ['room', 'group'].includes(event.source.type) ) {
                     event.reply(`我是賽亞人的驕傲！`);
@@ -92,6 +101,8 @@ const BotCommand = function (bot) {
                     } else if (event.source.type === 'group') {
                         bot.leaveGroup(event.source.groupId);
                     }
+                } else {
+                    event.reply(`看我幹嘛？我他媽還能去哪？`);
                 }
             }
         },
@@ -108,6 +119,7 @@ const BotCommand = function (bot) {
         "test": {
             public: false,
             description: "測試",
+            alias: ['測試'],
             do(event) {
                 let image = GoogleDrive.open('images/test').randomFile();
                 let imageInfo = GoogleDrive.getImageInfo(image);
@@ -116,7 +128,7 @@ const BotCommand = function (bot) {
                     originalContentUrl: imageInfo.origin,
                     previewImageUrl: imageInfo.thumbnail
                 }
-                log('test2 reply', msg);
+                log('test reply', msg);
                 event.reply(msg);
             }
         }
