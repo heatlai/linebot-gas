@@ -42,16 +42,26 @@ const BotCommand = function (bot) {
     this.getCommands = () => commands;
 
     let commands = {
-        "指令表": {
+        "指令": {
             public: true,
             description: "顯示可用指令",
             do(event) {
                 let list = "可用指令：\n";
-                let isAdmin = event.isAdmin();
                 Object.keys(commands).forEach(function(cmd) {
-                    if( commands[cmd].public || isAdmin) {
+                    if( commands[cmd].public ) {
                         list += `${cmd} : ${commands[cmd].description}\n`;
                     }
+                })
+                event.reply(list);
+            }
+        },
+        "全部指令": {
+            public: false,
+            description: "顯示可用指令",
+            do(event) {
+                let list = "可用指令：\n";
+                Object.keys(commands).forEach(function(cmd) {
+                    list += `${cmd} : ${commands[cmd].description}\n`;
                 })
                 event.reply(list);
             }
@@ -62,10 +72,11 @@ const BotCommand = function (bot) {
             alias: ['喝什麼', '口渴'],
             do(event) {
                 let data = arrayRandom(DB.newQuery().table('飲料店').all());
-                let msg = `隨機選中了一家飲料店\n`;
+                let msg = '';
                 Object.keys(data).forEach(function(col) {
                     msg += `${col} : ${data[col]}\n`
                 })
+                msg += '我們就喝這家吧！';
                 event.reply(msg);
             }
         },
@@ -98,7 +109,7 @@ const BotCommand = function (bot) {
             public: false,
             description: "測試",
             do(event) {
-                let image = GoogleDrive.open('images').randomFile();
+                let image = GoogleDrive.open('images/test').randomFile();
                 let imageInfo = GoogleDrive.getImageInfo(image);
                 let msg = {
                     type: 'image',
@@ -107,13 +118,6 @@ const BotCommand = function (bot) {
                 }
                 log('test2 reply', msg);
                 event.reply(msg);
-            }
-        },
-        "test2": {
-            public: false,
-            description: "測試2",
-            do(event) {
-
             }
         }
     }
