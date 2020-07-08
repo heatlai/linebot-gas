@@ -66,7 +66,7 @@ const BotCommand = function (bot) {
         },
         "全部指令": {
             public: false,
-            description: "顯示可用指令",
+            description: "顯示全部可用指令",
             do(event) {
                 let list = "";
                 Object.keys(commands).forEach(function(cmd) {
