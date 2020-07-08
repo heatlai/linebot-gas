@@ -2,6 +2,7 @@ class LineBot {
     constructor(options) {
         this.options = options || {};
         this.options.channelAccessToken = options.channelAccessToken || '';
+        this.options.adminUsers = options.adminUsers || [];
         this.headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -29,6 +30,12 @@ class LineBot {
             event.reply = function (message) {
                 return that.reply(event.replyToken, message);
             };
+            event.isAdmin = function() {
+                if( event.source ) {
+                    return that.options.adminUser.includes(sevent.source.userId);
+                }
+                return false;
+            }
             if (event.source) {
                 event.source.profile = function () {
                     if (event.source.type === 'group') {

@@ -28,8 +28,11 @@ const BotCommand = function (bot) {
     this.runCommand = function (event) {
         let cmd = this.existsCommand(event);
         if (cmd) {
-            log('runCommand', cmd);
-            return commands[cmd].do(event);
+            if ( commands[cmd].public || event.isAdmin()) {
+                log('runCommand', cmd);
+                commands[cmd].do(event);
+            }
+            return;
         }
         log('Unknown Command', event.message.text);
     }
@@ -42,8 +45,11 @@ const BotCommand = function (bot) {
             description: "顯示可用指令",
             do(event) {
                 let list = "可用指令：\n";
+                let isAdmin = event.isAdmin();
                 Object.keys(commands).forEach(function(cmd) {
-                    list += `${cmd} : ${commands[cmd].description}\n`;
+                    if( commands[cmd].public || isAdmin) {
+                        list += `${cmd} : ${commands[cmd].description}\n`;
+                    }
                 })
                 event.reply(list);
             }
@@ -84,6 +90,35 @@ const BotCommand = function (bot) {
                 let num = randomInt(3, 18);
                 let msg = `哼！遊戲boy 擲出了點數 : ${num}`;
                 event.reply(msg);
+            }
+        },
+        "test": {
+            public: false,
+            description: "測試",
+            do(event) {
+                event.reply({
+                    type: 'image',
+                    originalContentUrl: 'https://drive.google.com/thumbnail?id=1wjkM7cNZQuqW_CVYl1RdASfc5A8XGn42&sz=w800-h600',
+                    previewImageUrl: 'https://drive.google.com/thumbnail?id=1wjkM7cNZQuqW_CVYl1RdASfc5A8XGn42&sz=w640-h480'
+                });
+            }
+        },
+        "test2": {
+            public: false,
+            description: "測試2",
+            do(event) {
+                let original = GoogleDrive.open(GoogleDrive.IMAGES).getFileUrl('gozzila.jpg');
+                let preview = GoogleDrive.getThumbnailUrl('gozzila.jpg', 640, 480);
+                log('test2 reply', {
+                    type: 'image',
+                    originalContentUrl: original,
+                    previewImageUrl: preview
+                });
+                event.reply({
+                    type: 'image',
+                    originalContentUrl: original,
+                    previewImageUrl: preview
+                });
             }
         }
     }
