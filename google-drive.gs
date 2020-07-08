@@ -1,6 +1,4 @@
 class GoogleDrive {
-    // static IMAGES = "images";
-
     static open(folderName) {
         return new this(folderName);
     }
@@ -14,7 +12,7 @@ class GoogleDrive {
     }
 
     static getThumbnailUrl(filename, width, height) {
-        let folder = GoogleDrive.open(GoogleDrive.IMAGES).folder;
+        let folder = GoogleDrive.open('images').folder;
         let files = folder.getFilesByName(filename);
         if( ! files.hasNext() ) {
             return null;

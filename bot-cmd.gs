@@ -109,7 +109,7 @@ const BotCommand = function (bot) {
             public: false,
             description: "測試2",
             do(event) {
-                let original = GoogleDrive.open(GoogleDrive.IMAGES).getFileUrl('gozzila.jpg');
+                let original = GoogleDrive.open('images').getFileUrl('gozzila.jpg');
                 let preview = GoogleDrive.getThumbnailUrl('gozzila.jpg', 640, 480);
                 log('test2 reply', {
                     type: 'image',
