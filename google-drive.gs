@@ -11,6 +11,19 @@ class GoogleDrive {
         return (files.hasNext()) ? 'https://drive.google.com/uc?export=view&id=' + files.next().getId() : null;
     }
 
+    static getImageInfo(filename) {
+        let files = GoogleDrive.open('images').folder.getFilesByName(filename);
+        if( ! files.hasNext() ) {
+            return null;
+        }
+        let id = files.next().getId();
+        return {
+            url: `https://drive.google.com/uc?export=view&id=${id}`,
+            // thumbnail: `https://drive.google.com/thumbnail?id=${id}`
+            thumbnail: `https://lh3.googleusercontent.com/d/${id}=w300`
+        }
+    }
+
     static getThumbnailUrl(filename, width, height) {
         let folder = GoogleDrive.open('images').folder;
         let files = folder.getFilesByName(filename);

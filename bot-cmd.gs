@@ -98,10 +98,15 @@ const BotCommand = function (bot) {
             public: false,
             description: "測試",
             do(event) {
+                // event.reply({
+                //     type: 'image',
+                //     originalContentUrl: 'https://drive.google.com/thumbnail?id=1wjkM7cNZQuqW_CVYl1RdASfc5A8XGn42&sz=w800-h600',
+                //     previewImageUrl: 'https://lh3.googleusercontent.com/d/1wjkM7cNZQuqW_CVYl1RdASfc5A8XGn42=w800-h600'
+                // });
                 event.reply({
                     type: 'image',
-                    originalContentUrl: 'https://drive.google.com/thumbnail?id=1wjkM7cNZQuqW_CVYl1RdASfc5A8XGn42&sz=w800-h600',
-                    previewImageUrl: 'https://drive.google.com/thumbnail?id=1wjkM7cNZQuqW_CVYl1RdASfc5A8XGn42&sz=w640-h480'
+                    originalContentUrl: 'https://lh3.googleusercontent.com/d/1wjkM7cNZQuqW_CVYl1RdASfc5A8XGn42',
+                    previewImageUrl: 'https://lh3.googleusercontent.com/d/1wjkM7cNZQuqW_CVYl1RdASfc5A8XGn42=w300'
                 });
             }
         },
@@ -109,18 +114,15 @@ const BotCommand = function (bot) {
             public: false,
             description: "測試2",
             do(event) {
-                let original = GoogleDrive.open('images').getFileUrl('gozzila.jpg');
-                let preview = GoogleDrive.getThumbnailUrl('gozzila.jpg', 640, 480);
-                log('test2 reply', {
+                // let original = GoogleDrive.open('images').getFileUrl('gozzila.jpg');
+                let image = GoogleDrive.getImageInfo('gozzila.jpg');
+                let msg = {
                     type: 'image',
-                    originalContentUrl: original,
-                    previewImageUrl: preview
-                });
-                event.reply({
-                    type: 'image',
-                    originalContentUrl: original,
-                    previewImageUrl: preview
-                });
+                    originalContentUrl: image.url,
+                    previewImageUrl: image.thumbnail
+                }
+                log('test2 reply', msg);
+                event.reply(msg);
             }
         }
     }
