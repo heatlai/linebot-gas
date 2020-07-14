@@ -23,7 +23,7 @@ function doPost(e) {
     const botCmd = new BotCommand(lineBot);
 
     lineBot.on('message', function(event){
-        let cmd = this.parseCommandKey(event);
+        let cmd = botCmd.parseCommandKey(event);
         if( cmd ) {
             botCmd.runCommand(cmd, event);
         }
