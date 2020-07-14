@@ -23,6 +23,12 @@ class DB {
         return this;
     }
 
+    insert(values) {
+        let sheet = GoogleSheet.getSheetByName(this.tableName);
+        let newRowNum = sheet.getLastRow() + 1;
+        sheet.getRange(newRowNum, 1, 1, values.length).setValues([values]);
+    }
+
     all() {
         let sheet = GoogleSheet.getSheetByName(this.tableName);
         let lastRow = sheet.getLastRow();

@@ -1,13 +1,19 @@
 function log(msg) {
-    logInfo.apply(null, [...arguments]);
+    logDebug.apply(null, [...arguments]);
 }
 
 function logInfo(msg) {
+    let args = [...arguments].map((v) => JSON.stringify(v));
+    args.unshift('info');
+    writeLog(args);
+}
+
+function logDebug(msg) {
     if(!DEBUG) {
         return;
     }
     let args = [...arguments].map((v) => JSON.stringify(v));
-    args.unshift('info');
+    args.unshift('debug');
     writeLog(args);
 }
 
@@ -18,9 +24,5 @@ function logError(msg) {
 }
 
 function writeLog(values) {
-    var sheet = GoogleSheet.getSheetByName("log");
-    if (sheet != null) {
-        var newRow = sheet.getLastRow() + 1;
-        sheet.getRange(newRow, 1, 1, values.length).setValues([values]);
-    }
+    return DB.newQuery().table('log').insert(values);
 }

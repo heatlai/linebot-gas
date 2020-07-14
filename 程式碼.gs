@@ -11,7 +11,7 @@ const DEBUG = scriptProperties.getProperty('DEBUG');
 // 主程序
 function doPost(e) {
     e.method = 'post';
-    log('POST request', e);
+    logInfo('POST request', e);
 
     const lineBot = new LineBot({
         channelId: LINE_CHANNEL_ID,
