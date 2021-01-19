@@ -33,7 +33,6 @@ const BotCommand = function (bot) {
                 }
             }
         }
-        log('Unknown Command', event.message.text);
     }
     this.runCommand = function (commandKey, event) {
         if ( commands[commandKey].public || event.isAdmin()) {

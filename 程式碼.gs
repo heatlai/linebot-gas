@@ -23,9 +23,13 @@ function doPost(e) {
     const botCmd = new BotCommand(lineBot);
 
     lineBot.on('message', function(event){
-        let cmd = botCmd.parseCommandKey(event);
-        if( cmd ) {
-            botCmd.runCommand(cmd, event);
+        if( this.isTextMessage(event) ) {
+            let cmd = botCmd.parseCommandKey(event);
+            if( cmd ) {
+                botCmd.runCommand(cmd, event);
+            } else {
+                log('message log', event.message.text);
+            }
         }
 
         // let displayName = event.source.profile().displayName;
